@@ -1,0 +1,6 @@
+1x - FemurPart2
+1x - FemurPart3
+2x - FemurPart4
+2x - TibiaLeg
+2x - TibiaSide
+1x - TibiaFoot

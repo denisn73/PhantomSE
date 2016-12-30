@@ -1,0 +1,26 @@
+ToSend >{"msg_id":1283,"token":9,"param":"."}<
+JsonData >{u'pwd': u'/', u'rval': 0, u'msg_id': 1283}<
+ToSend >{"msg_id":1283,"token":9,"param":"\/tmp\/fuse_d"}<
+JsonData >{u'pwd': u'/tmp/fuse_d', u'rval': 0, u'msg_id': 1283}<
+ToSend >{"msg_id":1286,"token":9,"param":"enable_info_display.script", "offset":0, "size":0, "md5sum":"d41d8cd98f00b204e9800998ecf8427e"}<
+JsonData >{u'rval': 0, u'msg_id': 1286}<
+ToSend >{"msg_id":1283,"token":9,"param":"\/"}<
+JsonData >{u'pwd': u'/', u'rval': 0, u'msg_id': 1283}<
+ToSend >{"msg_id":5,"token":9,"type":"total"}<
+JsonData >{u'rval': 0, u'msg_id': 5, u'param': 7829600}<
+ToSend >{"msg_id":5,"token":9,"type":"free"}<
+JsonData >{u'rval': 0, u'msg_id': 5, u'param': 5634912}<
+JsonData >{u'msg_id': 7, u'type': u'battery', u'param': u'77'}<
+ToSend >{"msg_id":13,"token":9}<
+JsonData >{u'type': u'battery', u'rval': 0, u'msg_id': 13, u'param': u'77'}<
+ToSend >{"msg_id":5,"token":9,"type":"total"}<
+JsonData >{u'rval': 0, u'msg_id': 5, u'param': 7829600}<
+ToSend >{"msg_id":5,"token":9,"type":"free"}<
+JsonData >{u'rval': 0, u'msg_id': 5, u'param': 5634912}<
+ToSend >{"msg_id":259,"token":9,"param":"none_force"}<
+JsonData >{u'rval': 0, u'msg_id': 259}<
+JsonData >{u'msg_id': 7, u'type': u'battery', u'param': u'76'}<
+ToSend >{"msg_id":13,"token":9}<
+JsonData >{u'type': u'battery', u'rval': 0, u'msg_id': 13, u'param': u'76'}<
+JsonData >{u'msg_id': 1793}<
+JsonData >{u'msg_id': 7, u'type': u'put_file_fail', u'param': 0}<

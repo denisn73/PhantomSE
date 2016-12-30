@@ -1,0 +1,28 @@
+{
+  "TCP": {
+    "MAX_CLIENTS": 1
+  },
+  "WEB": {
+    "USERS": [
+      {
+        "name": "user",
+        "pass": "user"
+      },
+      {
+        "name": "admin",
+        "pass": "admin"
+      }
+    ]
+  },
+  "wifi": {
+    "ap_ssid": "BeerBoxESP",
+    "ap_pass": "1234567890",
+    "ap_hidden": false,
+    "Saved": [
+      {
+        "ssid": "NPMGroup-Guest",
+        "pass": ""
+      }
+    ]
+  }
+}

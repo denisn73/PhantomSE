@@ -1,0 +1,99 @@
+<html>
+<head>
+	<Title> SCAN </Title>
+	<meta charset="utf-8" />
+	<script>
+		function addRadio(parent, ap) {
+			var input = document.createElement("input");
+			input.type = "radio";
+			input.name = "ssid";
+			input.value = ap.ssid;
+			input.dataset.secure = ap.secure;
+			input.dataset.saved = ap.flag != 0;
+			input.onclick = function() {
+				document.getElementById('pwd').style.visibility = this.dataset.secure == 'true' ? 'visible' : 'hidden';
+				document.wifis.password.value = this.dataset.secure == 'true' && this.dataset.saved == 'true'  ? ',,,' : '';
+				document.wifis.delete.style.visibility = this.dataset.saved == 'true'  ? 'visible' : 'hidden';
+				document.wifis.save.style.visibility = this.dataset.saved == 'false'  ? 'visible' : 'hidden';
+			};
+			
+			parent.appendChild(input);
+			parent.appendChild(document.createTextNode(ap.rssi + ' ' + ap.ssid));
+		};
+		
+		function fillTable(res) {
+			var tbl = document.getElementById('list');
+		
+			for (var i = 0; i < res.length; i++) {
+				var tr = document.createElement("tr");
+		
+				var td = document.createElement("td");
+				addRadio(td, res[i]);
+				tr.appendChild(td);
+		
+				td = document.createElement("td");
+		
+				var icon = document.createElement("i");
+				icon.className = res[i].secure ? 'fa fa-lock' : 'fa fa-unlock';
+				td.appendChild(icon);
+		
+				if (res[i].flag == 1 || res[i].flag == 2) {
+					icon = document.createElement("i");
+					icon.style.marginLeft = "5px";
+					icon.className = res[i].flag == 1 ? 'fa fa-floppy-o' : 'fa fa-globe';
+					td.appendChild(icon);
+				}
+		
+				tr.appendChild(td);
+				tbl.appendChild(tr);
+		
+				console.log(res[i].ssid);
+			}
+		};
+		
+		function loadValues() {
+			 // var tmp = '[{"ssid":"Guest", "rssi":-80, "secure":false, "flag":0},{"ssid":"Guest1", "rssi":-80, "secure":false, "flag":1},{"ssid":"Guest2", "rssi":-80, "secure":false, "flag":2},{"ssid":"Guest3", "rssi":-80, "secure":true, "flag":0},{"ssid":"Guest4", "rssi":-80, "secure":true, "flag":1},{"ssid":"Guest5", "rssi":-80, "secure":true, "flag":2}]';
+			 // var res = JSON.parse(tmp);
+			 // fillTable(res);
+
+			// AJAX
+			var xh = new XMLHttpRequest();
+			xh.onreadystatechange = function() {
+				if (xh.readyState == 4 && xh.status == 200) {
+					var res = JSON.parse(xh.responseText);
+					fillTable(res);
+				}
+			};
+			xh.open("GET", "/wifi_scan", true);
+			xh.send(null);
+		};
+	</script>
+	
+	<style type="text/css">
+		html, body {
+		    height: 100%;
+		}
+		html {
+		    display: table;
+		    margin: auto;
+		}
+		body {
+		    display: table-cell;
+		    vertical-align: middle;
+		}
+		span, input[name='delete'] {
+			visibility: hidden;
+		}
+	</style>
+</head>
+<body onload="loadValues();">
+	<form name="wifis" action="/wifi_connect" method="post">
+		<table id="list"></table>
+		<span id="pwd">Пароль:<input type="password" name="password"/></span><br/>
+		<input type="checkbox" name="save" value="13" checked > Запомнить сеть </input><br/>
+		<input type="submit" value="Подключиться" />
+		<input type="submit" name="delete" value="Удалить" />
+	</form>
+	<input type="button" value="Сканировать" onclick="location.reload();" />
+</body>
+</html>

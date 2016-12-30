@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>PhantomX_SE - Hexapod</title>
+  <style>
+   .asTransmitter { visibility: visible; }
+   .asReciever { visibility: visible; }
+  </style>
+</head>
+
+<body onload="onBodyLoad()">
+	<div class="module" id="module">
+		<div>
+			<button name="+10" value="INC" onclick=increase()>+10</button>
+			<a id="reloadPeriod">unknown</a>
+			<button name="-10" value="DEC" onclick=decrease()>-10</button>
+		</div>
+		<br>
+		
+		<div><b>ModuleID    : </b><a id="moduleID">unknown</a></div>
+		<div><b>NetworkName : </b><a id="networkName">not connected</a></div>
+		<div><b>NetworkIP   : </b><a id="networkIP">none</a></div>
+		<div><b>USB         : </b><a id="usb">...</a></div>
+		<div><b>Control     : </b><a id="control">...</a></div>
+		<div><b>TIME        : </b><a id="time">...</a></div>
+		<br>
+		
+		<div>
+		<table border="1">
+			<tr>
+				<td align="center">Left Side</td>
+				<td align="center">Center</td>
+				<td align="center">Right Side</td>
+			</tr>
+			<tr>
+				<td>
+					<table border="1" align="center">
+						<tr><td width="80">L2</td><td id="L2" align="center" width="50">0</td></tr>
+						<tr><td>L1</td><td id="L1" align="center">0</td></tr>
+						<tr><td>UP</td><td id="UP" align="center">0</td></tr>
+						<tr><td>RIGHT</td><td id="RIGHT" align="center">0</td></tr>
+						<tr><td>DOWN</td><td id="DOWN" align="center">0</td></tr>
+						<tr><td>LEFT</td><td id="LEFT" align="center">0</td></tr>
+						<tr><td>LT</td><td id="LT" align="center">0</td></tr>
+						<tr><td>LeftHatX</td><td id="LeftHatX" align="center">0</td></tr>
+						<tr><td>LeftHatY</td><td id="LeftHatY" align="center">0</td></tr>
+					</table>
+				</td>
+				<td>
+					<table border="1" align="center">
+						<tr><td width="80">SELECT</td><td id="SELECT" align="center" width="50">0</td></tr>
+						<tr><td>START</td><td id="START" align="center">0</td></tr>
+						<tr><td>PS</td><td id="PS" align="center">0</td></tr>
+					</table>
+				</td>
+				<td>
+					<table border="1" align="center">
+						<tr><td width="80">R2</td><td id="R2" align="center" width="50">0</td></tr>
+						<tr><td>R1</td><td id="R1" align="center">0</td></tr>
+						<tr><td>TRIANGLE</td><td id="TRIANGLE" align="center">0</td></tr>
+						<tr><td>CIRCLE</td><td id="CIRCLE" align="center">0</td></tr>
+						<tr><td>CROSS</td><td id="CROSS" align="center">0</td></tr>
+						<tr><td>SQUARE</td><td id="SQUARE" align="center">0</td></tr>
+						<tr><td>RT</td><td id="RT" align="center">0</td></tr>
+						<tr><td>RightHatX</td><td id="RightHatX" align="center">0</td></tr>
+						<tr><td>RightHatY</td><td id="RightHatY" align="center">0</td></tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		</div>
+		<br>
+		
+		<div><b>Mode        : </b><a id="hexapodMode">...</a></div>
+		<div><b>WalkMethod  : </b><a id="walkmethod">...</a></div>
+		<div><b>Balance     : </b><a id="balance">...</a></div>
+		<div><b>Gait        : </b><a id="gait">...</a></div>
+		<div><b>GPseq       : </b><a id="gpseq">...</a></div>
+		<div><b>LegNum      : </b><a id="legnum">...</a></div>
+		<div><b>LegHold     : </b><a id="leghold">...</a></div>
+		<div><b>BodyY       : </b><a id="bodyY">...</a></div>
+		<div><b>SpeedControl: </b><a id="speedctrl">...</a></div>
+		<br>
+		
+		<div>
+		 <table border="1">
+			<tr>
+				<td>
+					<table border="1" align="center">
+					<tr><td>Front</td><td>Left</td></tr>
+					<tr><td>Coxa</td><td id="servo15" align="center">0</td></tr>
+					<tr><td>Femur</td><td id="servo16" align="center">0</td></tr>
+					<tr><td>Tibia</td><td id="servo17" align="center">0</td></tr>
+					</table>
+				</td>
+				<td>
+					<table border="1" align="center">
+					<tr><td>Front</td><td>Right</td></tr>
+					<tr><td>Coxa</td><td id="servo6" align="center">0</td></tr>
+					<tr><td>Femur</td><td id="servo7" align="center">0</td></tr>
+					<tr><td>Tibia</td><td id="servo8" align="center">0</td></tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table border="1" align="center">
+					<tr><td>Middle</td><td>Left</td></tr>
+					<tr><td>Coxa</td><td id="servo12" align="center">0</td></tr>
+					<tr><td>Femur</td><td id="servo13" align="center">0</td></tr>
+					<tr><td>Tibia</td><td id="servo14" align="center">0</td></tr>
+					</table>
+				</td>
+				<td>
+					<table border="1" align="center">
+					<tr><td>Middle</td><td>Right</td></tr>
+					<tr><td>Coxa</td><td id="servo3" align="center">0</td></tr>
+					<tr><td>Femur</td><td id="servo4" align="center">0</td></tr>
+					<tr><td>Tibia</td><td id="servo5" align="center">0</td></tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table border="1" align="center">
+					<tr><td>Rear</td><td>Left</td></tr>
+					<tr><td>Coxa</td><td id="servo9" align="center">0</td></tr>
+					<tr><td>Femur</td><td id="servo10" align="center">0</td></tr>
+					<tr><td>Tibia</td><td id="servo11" align="center">0</td></tr>
+					</table>
+				</td>
+				<td>
+					<table border="1" align="center">
+					<tr><td>Rear</td><td>Right</td></tr>
+					<tr><td>Coxa</td><td id="servo0" align="center">0</td></tr>
+					<tr><td>Femur</td><td id="servo1" align="center">0</td></tr>
+					<tr><td>Tibia</td><td id="servo2" align="center">0</td></tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table border="1" align="center">
+					<tr><td>TurretRot</td></tr>
+					<tr><td id="servo18" align="center">0</td></tr>
+					</table>
+				</td>
+				<td>
+					<table border="1" align="center">
+					<tr><td>TurretTilt</td></tr>
+					<tr><td id="servo19" align="center">0</td></tr>
+					</table>
+				</td>
+			</tr>
+		 </table>
+		</div>
+		<br>
+		
+	</div>
+	<div class="asTransmitter" id="asTransmitter">
+		<div><b>Connected   : </b><a id="hexapodConnected">none</a></div>
+		<div><b>Battery : </b><a id="hexapodBattery">...</a></div>
+	</div>
+	<div class="asReciever" id="asReciever">
+		<div><b>Connected   : </b><a id="hexapodConnected">none</a></div>
+		<div><b>Battery : </b><a id="hexapodBattery">...</a></div>
+		<div><b>Balance : </b><a id="hexapodBalance">...</a></div>
+		<div><b>Mode : </b><a id="hexapodMode">...</a></div>
+	</div>
+	
+	
+</body>
+
+<script type="text/javascript">
+	var reloadPeriod = 100;
+	var running = false;
+	var isTransmitter = false;
+	
+	function onError(e) {
+	  console.log("Error " + e.target.status + " occurred while receiving the document.");
+	}
+	
+	function increase() {
+		if(reloadPeriod<1000) reloadPeriod += 10;
+		document.getElementById('reloadPeriod').innerHTML = reloadPeriod;
+	};
+	
+	function decrease() {
+		if(reloadPeriod>10) reloadPeriod -= 10;
+		document.getElementById('reloadPeriod').innerHTML = reloadPeriod;
+	};
+	
+	function fillElement(element, value) {
+		element.innerHTML = value;
+		if(value) element.style.background = "#8be899";
+		else element.style.background = "#e88b8b";
+	};
+	
+	function fillMain(res) {
+		
+		
+		document.getElementById('networkName').innerHTML = res[0].SSID;
+		document.getElementById('networkIP').innerHTML = res[0].IP;
+		document.getElementById('moduleID').innerHTML = res[0].ID;
+		document.getElementById('usb').innerHTML = res[0].USB;
+		document.getElementById('time').innerHTML = res[0].TIME;
+		
+		fillElement(document.getElementById("L2"), res[0].L2);
+		fillElement(document.getElementById("L1"), res[0].L1);
+		fillElement(document.getElementById("UP"), res[0].UP);
+		fillElement(document.getElementById("RIGHT"), res[0].RIGHT);
+		fillElement(document.getElementById("DOWN"), res[0].DOWN);
+		fillElement(document.getElementById("LEFT"), res[0].LEFT);
+		fillElement(document.getElementById("LT"), res[0].LT);
+		fillElement(document.getElementById("LeftHatX"), res[0].LeftHatX);
+		fillElement(document.getElementById("LeftHatY"), res[0].LeftHatY);
+		
+		fillElement(document.getElementById("R2"), res[0].R2);
+		fillElement(document.getElementById("R1"), res[0].R1);
+		fillElement(document.getElementById("TRIANGLE"), res[0].TRIANGLE);
+		fillElement(document.getElementById("CIRCLE"), res[0].CIRCLE);
+		fillElement(document.getElementById("CROSS"), res[0].CROSS);
+		fillElement(document.getElementById("SQUARE"), res[0].SQUARE);
+		fillElement(document.getElementById("RT"), res[0].RT);
+		fillElement(document.getElementById("RightHatX"), res[0].RightHatX);
+		fillElement(document.getElementById("RightHatY"), res[0].RightHatY);
+		
+		fillElement(document.getElementById("SELECT"), res[0].SELECT);
+		fillElement(document.getElementById("START"), res[0].START);
+		fillElement(document.getElementById("PS"), res[0].PS);
+	
+		
+		document.getElementById('servo0').innerHTML = res[0].POS0;
+		document.getElementById('servo1').innerHTML = res[0].POS1;
+		document.getElementById('servo2').innerHTML = res[0].POS2;
+		document.getElementById('servo3').innerHTML = res[0].POS3;
+		document.getElementById('servo4').innerHTML = res[0].POS4;
+		document.getElementById('servo5').innerHTML = res[0].POS5;
+		document.getElementById('servo6').innerHTML = res[0].POS6;
+		document.getElementById('servo7').innerHTML = res[0].POS7;
+		document.getElementById('servo8').innerHTML = res[0].POS8;
+		document.getElementById('servo9').innerHTML = res[0].POS9;
+		document.getElementById('servo10').innerHTML = res[0].POS10;
+		document.getElementById('servo11').innerHTML = res[0].POS11;
+		document.getElementById('servo12').innerHTML = res[0].POS12;
+		document.getElementById('servo13').innerHTML = res[0].POS13;
+		document.getElementById('servo14').innerHTML = res[0].POS14;
+		document.getElementById('servo15').innerHTML = res[0].POS15;
+		document.getElementById('servo16').innerHTML = res[0].POS16;
+		document.getElementById('servo17').innerHTML = res[0].POS17;
+		document.getElementById('servo18').innerHTML = res[0].POS18;
+		document.getElementById('servo19').innerHTML = res[0].POS19;
+		
+		if(res[0].MODE==0) document.getElementById('hexapodMode').innerHTML = "WALKMODE";
+		else if(res[0].MODE==1) document.getElementById('hexapodMode').innerHTML = "TRANSLATEMODE";
+		else if(res[0].MODE==2) document.getElementById('hexapodMode').innerHTML = "ROTATEMODE";
+		else if(res[0].MODE==3) document.getElementById('hexapodMode').innerHTML = "SINGLELEGMODE";
+		else if(res[0].MODE==4) document.getElementById('hexapodMode').innerHTML = "GPPLAYERMODE";
+		else  document.getElementById('hexapodMode').innerHTML = "unknown";
+		document.getElementById('balance').innerHTML = res[0].BALANCE;
+		document.getElementById('speedctrl').innerHTML = res[0].SPEEDCTRL;
+		document.getElementById('walkmethod').innerHTML = res[0].WALKMETHOD;
+		document.getElementById('gpseq').innerHTML = res[0].GPSEQ;
+		document.getElementById('leghold').innerHTML = res[0].LEGHOLD;
+		document.getElementById('gait').innerHTML = res[0].GAIT;
+		document.getElementById('bodyY').innerHTML = res[0].BODYY;
+		if(res[0].LEGNUM==0) document.getElementById('legnum').innerHTML = "[0] Right Rear";
+		else if(res[0].LEGNUM==1) document.getElementById('legnum').innerHTML = "[1] Right Middle";
+		else if(res[0].LEGNUM==2) document.getElementById('legnum').innerHTML = "[2] Right Front";
+		else if(res[0].LEGNUM==3) document.getElementById('legnum').innerHTML = "[3] Left Rear";
+		else if(res[0].LEGNUM==4) document.getElementById('legnum').innerHTML = "[4] Left Middle";
+		else if(res[0].LEGNUM==5) document.getElementById('legnum').innerHTML = "[5] Left Front";
+		
+	}
+	
+	function fillNetwork(res) {
+		
+	};
+	
+	function fillValues(res) {
+		if(isTransmitter) {
+			document.getElementById('hexapodConnected').innerHTML  = "connected";
+		} else {
+			document.getElementById('hexapodConnected').innerHTML  = "connected";
+			document.getElementById('hexapodBattery').innerHTML = res[0].BAT;
+			document.getElementById('hexapodBalance').innerHTML = res[0].BALANCE;
+		}
+		
+	};
+	
+	function loadMain() {
+		var xh = new XMLHttpRequest();
+		xh.onreadystatechange = function() {
+			if (xh.readyState == 4 && xh.status == 200) {
+				var res = JSON.parse(xh.responseText);
+				fillMain(res);
+				setTimeout(loadMain, reloadPeriod);
+			} else {
+				running = false;
+				document.getElementById('hexapodConnected').innerHTML = "not connected";
+			}
+		};
+		xh.onerror = onError;
+		xh.open("GET", "/phoenixData", true);
+		xh.send(null);
+	};
+	
+	function loadNetwork() {
+		var xh = new XMLHttpRequest();
+		xh.onreadystatechange = function() {
+			if (xh.readyState == 4 && xh.status == 200) {
+				var res = JSON.parse(xh.responseText);
+				fillNetwork(res);
+			} else {
+			}
+		};
+		xh.open("GET", "/loadNetwork", true);
+		xh.send(null);
+	};
+	
+	function loadValues() {
+	  if(!running) return;
+	  var xh = new XMLHttpRequest();
+	  xh.onreadystatechange = function() {
+		if (xh.readyState == 4 && xh.status == 200) {
+			var res = JSON.parse(xh.responseText);
+			fillValues(res);
+			if(running) setTimeout(loadValues, reloadPeriod);
+		} else {
+			running = false;
+			document.getElementById('hexapodConnected').innerHTML = "not connected";
+		}
+	  };
+	  xh.open("GET", "/loadValues", true);
+	  xh.send(null);
+	};
+
+	function run() {
+	  if(!running){
+		running = true;
+		loadMain();
+	  }
+	};
+
+	function onBodyLoad() {
+		document.getElementById("asTransmitter").style.visibility = "hidden";
+		document.getElementById("asReciever").style.visibility = "hidden";
+		document.getElementById('reloadPeriod').innerHTML = reloadPeriod;
+		loadMain();
+	};
+</script>
+
+</html>
